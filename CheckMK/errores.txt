@@ -1,0 +1,21 @@
+#  Check_MK Service Error
+--> Communication failed: Errno 113 No route to host
+    1. Problema de comunicaciones, comprobar por parte de sistemas que el servidor tiene el agente, que el puerto 6556 esta abierto en ipv4/tcp (NO TCP6). Si no, comunicaciones, que 
+        el firewall no bloquee, y que la ruta al equipo este bien establecida.
+        --> Comprobar firewall
+            --> Pasos
+                1. Saber que SO tenemos: cat /etc/os-release
+                2. Firewalls que podemos comprobar: ufw (ufw status verbose), nftables (nft list ruleset), firewall-cmd (firewall-cmd -), iptables (iptables -L)
+                3. En caso de querer deshabilitar el firewall "systemctl stop x" y "systemctl disable x"
+        
+--> Communication failed: Errno 111 Connection refused
+    1. Posibilidad de que el puerto este cerrado, en caso de ser con vSphere es el puerto 80/443, en caso de ser SNMP 161, en caso de ser agente es el puerto Checkmk 6556
+        --> Se puede hacer telnet para comprobar que puertos estan abiertos o cerrados "telnet ip puerto"
+
+--> [snmp] SystemError('<built-in function getbulk> returned a result with an error set')CRIT, Got no information from host
+    1. Posibilidad de que la cantidad de bulks sea muy alta para el equipo de Red en concreto.
+        --> "snmpwalk -v2c -c usuario ip" en el slave para probar que se recogen datos del SNMP, si devuelve datos probar a bajar la cnatidad de bulks en la GUI de CheckMK
+
+--> [agent] Empty output from host ip:6556 Got no information from host, execution time 0.0 sec
+    1. Posiblemente se hayan dejado una ip fija en la whitelist del agente o usen una version antigua de agente   
+        --> Instalar nuevo agente 

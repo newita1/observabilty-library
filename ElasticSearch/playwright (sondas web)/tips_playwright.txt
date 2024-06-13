@@ -1,0 +1,40 @@
+--> TRES FORMAS PARA LANZAR EL TEST
+    1. npx playwright test --ui = Te carga una pagina donde puedes ejecutar y ver el paso a paso 
+    2. npx playwright test --headed = Te abre le navegador de incognito y se desplaza por las webs sin registrarte el paso a paso
+    3. npx playwright test = Te ejecuta el test en Visual Studio sin poderlo ver
+
+--> FORMAS DE UBICAR UN COMPONENTE DE LA WEB
+    1. page.locator('(componente(input,li,button,a..))[atributo(id,class,name..)="nombre"]')
+    2. page.getByText('(texto), {exact: true}')
+    3. page.getByRole('componente', {name: 'texto'})
+
+--> SI EN LA WEB HAY DOS O MAS COMPONENTES CON LOS MISMOS COMPONENTES Y ATRIBUTOS PODEMOS USAR NTH
+    1. busca el primer componente con el atributo data-testclass de la etiqueta li y da click, se le especifica que componente como las posiciones de un array: 0..1..2..
+        --> await page.locator('li[data-testclass="sn-global-search-record"]').nth(0).click();
+
+--> Separar el codigo en pasos dentro del mismo test
+    1. accede a la web, haz un inicio de sesion, carga la pagina principal
+        -->
+        await test.step('01. Load Webpage', async () => {
+            Contenido
+          });
+          
+          await test.step('02. Login', async () => {
+            Contenido 
+          });     
+  
+          await test.step('03. Load HomePage', async () => {
+            Contenido
+        });
+
+--> OTROS
+    1. Para hacer lo equivalente a un sleep en el codigo de playwright es con waitForTimeout, ejemplo: Espera 20 segundos
+        --> page.waitForTimeout(20000) (ms)
+    2. Para esperar a que una pagina acabe de cargar por completo para poder hacer el paso del test (incio del test (goto)), se hace con un waitUntil "load"
+        --> await page.goto('https://web.com/',{waitUntil: "load"});
+    3. Cuando se hace una acción que te lleva a otra web y necesitas esperar que cargue una vez haces clic es con "waitForURL", espera que cargue por completo la web https://web.com/restoderuta.html
+       y si no carga en 30 segundos hace timeout
+        --> await page.waitForURL('**/restoderuta.html', {waitUntil:"load", timeout:30000 });
+
+DOCUMENTACIÓN OFICIAL (esta bastante bien explicada):
+    https://playwright.dev/

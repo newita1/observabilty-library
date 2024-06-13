@@ -1,0 +1,13 @@
+--> INSTALAR PLAYWRIGHT EN VSCODE 
+    1. Descargar la extension Playwright Test for VSCode
+    2. En la barra de busqueda de VSC poner "> Install Playwright"
+    3. Activar la opcón de javascript para no trabajar con typescript
+    4. Una vez instalado ir al fichero "playwright.conf.js" y agregar las siguientes lineas en projects donde esta el navegador chrome -->
+________________________________________________________________________________________________
+    name: 'Chrome web',
+    use: {
+        browserName: 'chromium',
+        launchOptions: {
+            executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+        }
+________________________________________________________________________________________________

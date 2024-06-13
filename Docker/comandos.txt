@@ -1,0 +1,11 @@
+CRAER IMAGEN DOCKER
+--> docker build -t nombre:version .
+
+EXPORTAR IMAGEN DOCKER
+--> docker save -o /ruta/de/mi/imagen/nombre_de_mi_imagen.tar nombre_de_mi_imagen
+
+IMPORTAR
+--> docker load -i /ruta/de/mi/imagen/nombre_de_mi_imagen.tar
+
+CREAR CONTENEDOR DE LA IMAGEN
+--> docker create --name NOMBREDELCONTENEDOR -e VARIABLES -p 8888:8888 imagen

@@ -1,0 +1,43 @@
+SNMP
+_________________________________________________________________________________________________________________________
+-->RECORRER LAS OIDs
+    1. Para SNMP version 2
+        --> snmpwalk -v2c -c USUARIO xxx.xxx.xxx.xxx (OID)
+    2. Para SNMP version 3
+        --> snmpwalk -v 3 -u USUARIO -l authPriv -a MD5 -A CONTRASEÑA -x AES -X CONTRASEÑA xxx.xxx.xxx.xxx (OID)
+
+--> AGREGAR LOS PLUGINS DE SNMP AL SERVIDOR PASOS
+    1. Crear el plugin 
+    2. Meter el plugin en la ruta /opt/omd/sites/master/local/lib/check_mk/base/plugins/agent_based/
+    3. Aplicar el plugin a un host de checkmk con 
+        --> cmk -I --detect-plugins="nombredelplugin" -vvI "host"
+
+--> 
+_________________________________________________________________________________________________________________________
+
+--> SERVICIOS DE WINDOWS (ver si estan runing o stopped)
+    1. En Setup buscamos "Windows Services"
+    2. Creamos nueva rule
+    3. Name of the service agregamos el nombre del Servicios
+    3.1. Parameters agregamos el estado del servicio y el estado que nos devuelve
+
+--> CREAR SERVICIOS HTTP (standard)
+    1. En Setup buscamos "HTTP"
+    2. Creamos nueva rule
+    3. Agregamos en service name el nombre que queremos para el servicio (personalizado)
+    3.1. hostname / ip address
+    3.2. TCP Port (80, 443 (por defecto))
+    3.3. agregamos virtual host en caso de tener
+    3.4. en URI to fetch podemos agregar la ruta de la web ejemplo: /index.html, buscaria http://web.com/index.html
+    3.5. Si es https agregamos en "Use SSL/HTTPS for the connection" > "Use SSL with auto negotiation"
+    3.6. Agregamos en "Seconds before connection times out" 15 segundos por si las moscas
+
+--> CREAR SERVICIOS INTEGRADOS NAGIOS
+    1. En Setup buscamos "Integrate Nagios plugins"
+    2. Creamos nueva rule
+    3. Agregamos un service description con el nombre que queremos ponerle al servicio
+    3.1. Command line ponemos la ruta al script (intentamos que todos los scripts de nagios esten en la ruta /opt/scripts/) y tambien le pasamos los valores de las variables
+         debe quedar algo como: "python3 /opt/scripts/oracle/script.py valor1 valor2 ..."
+    3.2. Activamos "Performance data"
+    
+    
