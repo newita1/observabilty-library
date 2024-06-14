@@ -1,0 +1,5 @@
+--> CHULETITA PARA RECORDARLO
+    1. Hearbeath: Ejecución de monitores (HTTP, TCP,ICMP, Test Sintetico)
+    2. Filebeat: Recoge logs, permite procesarlos en cliente
+    3. Metricbeat: Recoge metricas de equipos (CPU,RAM,Disco..)
+    4. APM: A través del agente de elastic recoge emtrias de aplicaciones y users 
