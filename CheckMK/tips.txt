@@ -1,4 +1,4 @@
-SNMP
+
 _________________________________________________________________________________________________________________________
 -->RECORRER LAS OIDs
     1. Para SNMP version 2
@@ -40,4 +40,10 @@ ________________________________________________________________________________
          debe quedar algo como: "python3 /opt/scripts/oracle/script.py valor1 valor2 ..."
     3.2. Activamos "Performance data"
     
-    
+--> HACER QUE UN HOST SE VEA OK SIN NECESIDAD DE TENER PING
+    1. En Setup buscamos "Host monitoring rules"
+    2. Entramos en "Host Check Command"
+    3. Creamos nueva rule
+    4. Escogemos el servicio que sera el que de el estado al host
+    4.1. Agregamos el "Explicit hosts"
+    5. Hacemos un "Reschedule check" del servicio para que se actualice el estado del host
