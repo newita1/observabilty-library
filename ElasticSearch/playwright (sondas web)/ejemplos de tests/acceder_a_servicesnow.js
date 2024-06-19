@@ -15,8 +15,8 @@ test('Acceder a checkmk', async ({ page }) => {
         });
         
         await test.step('02. Login', async () => {
-          await page.locator('input[id="user_name"]').fill("contraseña");
-          await page.locator('input[id="user_password"]').fill("usuario");
+          await page.locator('input[id="user_name"]').fill("usuario");
+          await page.locator('input[id="user_password"]').fill("contrasñea");
           await page.locator('button[name="not_important"]').click();  
         });     
 

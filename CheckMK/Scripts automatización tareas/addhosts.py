@@ -12,43 +12,60 @@ import pandas as pd
 from tqdm import tqdm
 import os
 
+import requests
+import pandas as pd
+from tqdm import tqdm
+import os
+import pprint
+
 # Definimos variables generales
-API_URL = "https://url/master/check_mk/api/v0"
-HEADERS = {"Authorization": "Bearer usuario contrasena ", "Accept": "application/json", "Content-Type": "application/json"}
+HOST_NAME = "localhost"
+SITE_NAME = "site"
+API_URL = f"http://{HOST_NAME}/{SITE_NAME}/check_mk/api/1.0"
+
+USERNAME = "usuario"
+PASSWORD = "contrasena"
+
+session = requests.session()
+session.headers['Authorization'] = f"Bearer {USERNAME} {PASSWORD}"
+session.headers['Accept'] = 'application/json'
 DEFAULT_FILL_VALUE = "NA"
 
-# Inicializamos la sesión
-session = requests.session()
-session.headers = HEADERS
+
 
 # Modificamos los hosts que tienen etag a través de una request a la API
 def add_host_checkmk(main, pais, establecimiento, centro, codigosalon, hostname, alias, ip_address, checkagent, snmp, dispositivo, fabricante, modelo, sistemaop, servicio):
-    try:
-        folder_path = f"/{main}/{pais}/{establecimiento}/{centro}"
-        resp = session.post(
-            f"{API_URL}/domain-types/host_config/collections/all",
-            params={"bake_agent": False,
-                    "verify": False},
+    folder_path = f"/{main}/{pais}/{establecimiento}/{centro}"
+    resp = session.post(
+        f"{API_URL}/domain-types/host_config/collections/all",
+        params={  # goes into query string
+            "bake_agent": False,  # Tries to bake the agents for the just created hosts.
+        },
+        headers={
+            "Content-Type": 'application/json',  # (required) A header specifying which type of content is in the request/response body.
+        },
             json={
-                'folder': folder_path,
-                'host_name': hostname,
-                'attributes': {
-                    'alias': alias,
-                    'ipaddress': ip_address,
-                    'tag_agent': checkagent,
-                    'tag_snmp_ds': snmp,
-                    'tag_TipoDispositivo': dispositivo,
-                    'tag_Fabricante': fabricante,
-                    'tag_Modelo': modelo,
-                    'tag_SistemaOperativo': sistemaop,
-                    'tag_Servicio': servicio
-                },
+            'folder': folder_path,
+            'host_name': hostname,
+            'attributes': {
+                'alias': alias,
+                'ipaddress': ip_address,
+                'tag_agent': checkagent,
+                'tag_snmp_ds': snmp,
+                'tag_TipoDispositivo': dispositivo,
+                'tag_Fabricante': fabricante,
+                'tag_Modelo': modelo,
+                'tag_SistemaOperativo': sistemaop,
+                'tag_Servicio': servicio
             },
-        )
-        print(f"Host {hostname} creado en {folder_path}")
-    except requests.exceptions.RequestException as e:
-        print(f"Error al crear host {hostname}: {e}")
-        print(f"Respuesta del servidor: {resp.text}")
+        },
+    )
+    if resp.status_code == 200:
+        pprint.pprint(f"Se ha creado {hostname} en el folder {folder_path}")
+    elif resp.status_code == 204:
+        print("Done")
+    else:
+        raise RuntimeError(pprint.pformat(resp.json()))
 
 
 if __name__ == '__main__':
