@@ -11,11 +11,6 @@ import requests
 import pandas as pd
 from tqdm import tqdm
 import os
-
-import requests
-import pandas as pd
-from tqdm import tqdm
-import os
 import pprint
 
 # Definimos variables generales
