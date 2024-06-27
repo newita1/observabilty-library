@@ -21,13 +21,12 @@ def check_forti_contractdescription(item, section):
                 fecha_actual = datetime.now()
                 diferencia = fecha_formateada - fecha_actual
                 # Si la caducidad(en dias) es menor a 1 mes, salta un warning, si es a 2 semanas, salta un critical, si no es ninguna de las dos, esta en ok.
-                if int(diferencia.days) < 30:
-                    yield Result(state = State.WARN, summary = f"Quedan {diferencia.days} dias para que caduque el certificado.")
-                elif int(diferencia.days) <= 14:
+                if int(diferencia.days) <= 14:
                     yield Result(state = State.CRIT, summary = f"Quedan {diferencia.days} dias para que caduque el certificado.")
+                elif int(diferencia.days) < 30:
+                    yield Result(state = State.WARN, summary = f"Quedan {diferencia.days} dias para que caduque el certificado.")
                 else:
                      yield Result(state = State.OK, summary = f"Quedan {diferencia.days} dias para que caduque el certificado.")
-
 
 register.check_plugin(
     name="forti_contractdescription",
