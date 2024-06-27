@@ -19,3 +19,13 @@
 --> [agent] Empty output from host ip:6556 Got no information from host, execution time 0.0 sec
     1. Posiblemente se hayan dejado una ip fija en la whitelist del agente o usen una version antigua de agente   
         --> Instalar nuevo agente 
+
+
+
+--> Error a la hora de crear un servicio con Nagios plugin y que no salga en el listado de servicios del host que se ha marcado
+    1. Existe la posibilidad de que el equipo este "bug" y sea necesario eliminar todo lo relacionado con el equipo a nivel de backend 
+        (verificar antes que si creas el equipo con otro nombre y le asignas el plugin creado, se lista en su listado de servicios)
+        --> No es necesario pero por si acaso eliminamos la regla de Nagios integrations que hemos creado
+        --> Eliminamos el equipo desde la UI
+        --> Buscamos con "find / | grep host" y eliminamos todo el contenido relacionado con el host dentro de las carpetas de checkmk
+        --> Recreamos la rule de nagios integrations y el equipo 

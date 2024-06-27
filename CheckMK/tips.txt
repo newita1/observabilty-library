@@ -10,8 +10,8 @@ ________________________________________________________________________________
     1. Crear el plugin 
     2. Meter el plugin en la ruta /opt/omd/sites/master/local/lib/check_mk/base/plugins/agent_based/
     3. Aplicar el plugin a un host de checkmk con 
-        --> cmk -I --detect-plugins="nombredelplugin" -vvI "host"
-
+        --> cmk -I --detect-plugins="nombredelplugin" -vI "host"   (Para un host en especifico.)
+        --> cmk -I --detect-plugins="nombredelplugin" -vI @Tag1,Tag2....   (Para multiples hosts que compartan etiquetas.)
 --> 
 _________________________________________________________________________________________________________________________
 
